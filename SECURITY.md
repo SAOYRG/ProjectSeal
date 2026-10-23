@@ -9,13 +9,11 @@ Review current Sigstore advisories before release/deployment.
 
 ## Reporting a vulnerability
 
-After this repository is hosted on GitHub, use its **Security → Report a
-vulnerability** private reporting feature. Maintainers must enable that feature
-and validate that it is available before the first public release. If it is not
-available, open an issue asking for a private contact channel **without exploit
-details, credentials or sensitive artifacts**. A permanent private security
-contact has not yet been configured; configuring one is a release prerequisite.
-No fictional security mailbox or response-time SLA is advertised.
+Use [GitHub private vulnerability reporting](https://github.com/SAOYRG/ProjectSeal/security/advisories/new).
+Private reporting is enabled for this repository. If GitHub reporting is
+temporarily unavailable, open an issue asking for a private contact channel
+**without exploit details, credentials or sensitive artifacts**. No fictional
+security mailbox or response-time SLA is advertised.
 
 Include the version, operating system, expected trust constraint, minimal
 reproduction and impact. Redact tokens, passwords and private keys. Do not attach

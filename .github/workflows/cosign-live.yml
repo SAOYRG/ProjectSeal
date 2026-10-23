@@ -24,7 +24,7 @@ jobs:
           python-version: '3.13'
       - uses: sigstore/cosign-installer@3454372f43399081ed03b604cb2d021dabca52bb # v3.8.2
         with:
-          cosign-release: v3.0.2
+          cosign-release: v3.1.4
       - run: python -m pip install -e ".[dev]"
       - name: Sign synthetic release and verify identity, manifest and tampering
         env:

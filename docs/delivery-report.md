@@ -13,7 +13,7 @@ explicit policy files, separately signed canonical manifests, JSON and CI modes,
 overwrite protection, cancellation and actionable failures are present.
 
 The CLI delegates business logic to core APIs. SigningBackend is a protocol;
-the initial backend checks the exact Cosign 3.0.2 version and required options.
+the initial backend checks the exact Cosign 3.1.4 version and required options.
 Trust is never learned from a project, bundle or manifest. Ambiguous Cosign
 failures are VERIFICATION_FAILED; no diagnostic-string classification is claimed.
 The architecture leaves Cloud/License/Shield as optional future adapters only.
@@ -40,7 +40,7 @@ or install your own verified supported Cosign. See [the signing guide](signing-g
 
 ## Verification results
 
-- Normal suite: **100 passed, 3 skipped**, **95%** statement/branch coverage on
+- Normal suite: **106 passed, 3 skipped**, **95%** statement/branch coverage on
   Windows amd64/Python 3.13.12. Skips are opt-in real-fixture, keyless and key tests.
 - Ruff lint/format and strict mypy passed.
 - Separate real Cosign public-bundle suite: **1 passed**, covering valid signature,

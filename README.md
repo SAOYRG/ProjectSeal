@@ -54,8 +54,8 @@ dist/projectseal-0.1.0-py3-none-any.whl`. A public PyPI release is not assumed.
 
 ### Cosign
 
-This version accepts **Cosign 3.0.2 only** and probes its required flags. Download
-the appropriate executable from the [official release](https://github.com/sigstore/cosign/releases/tag/v3.0.2),
+This version accepts **Cosign 3.1.4 only** and probes its required flags. Download
+the appropriate executable from the [official release](https://github.com/sigstore/cosign/releases/tag/v3.1.4),
 verify it following the [official installation guide](https://docs.sigstore.dev/cosign/system_config/installation/),
 and add it to `PATH` as `cosign` (`cosign.exe` on Windows). Choose Windows amd64,
 macOS amd64/arm64, or Linux amd64/arm64 as appropriate. Do not silently substitute

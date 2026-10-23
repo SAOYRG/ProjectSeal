@@ -2,14 +2,20 @@
 
 ## Compatibility
 
-The adapter pins **Cosign 3.0.2 exactly** and checks `version`, `sign-blob --help`
+The adapter pins **Cosign 3.1.4 exactly** and checks `version`, `sign-blob --help`
 and `verify-blob --help`. Prereleases and other patch versions are rejected until
 tested. This is an intentionally narrow tested interface, not a claim that this
 release is the newest or suitable forever. Review upstream advisories before
 publishing and expand the pin only after running the live suite.
 
-Parameter references are the [pinned signing command](https://github.com/sigstore/cosign/blob/v3.0.2/doc/cosign_sign-blob.md),
-[pinned verification command](https://github.com/sigstore/cosign/blob/v3.0.2/doc/cosign_verify-blob.md)
+Earlier pre-release work used Cosign 3.0.2. It was replaced before source upload
+after reviewing [GHSA-fx35-mq7g-6g98](https://github.com/sigstore/cosign/security/advisories/GHSA-fx35-mq7g-6g98)
+and certificate-chain advisories. This release rejects vulnerable older versions
+and legacy bundles. Only modern v0.3 message-signature bundles are accepted;
+unsupported or malformed bundles fail before invoking Cosign verification.
+
+Parameter references are the [pinned signing command](https://github.com/sigstore/cosign/blob/v3.1.4/doc/cosign_sign-blob.md),
+[pinned verification command](https://github.com/sigstore/cosign/blob/v3.1.4/doc/cosign_verify-blob.md)
 and [Sigstore quickstart](https://docs.sigstore.dev/quickstart/quickstart-cosign/).
 The modern bundle format is the v3 default. No insecure skip flags are used.
 

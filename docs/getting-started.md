@@ -1,6 +1,6 @@
 # Getting started
 
-Install Python 3.11+ and verified Cosign 3.0.2, then `python -m pip install .`
+Install Python 3.11+ and verified Cosign 3.1.4, then `python -m pip install .`
 from this repository, preferably in a virtual environment.
 
 ```sh

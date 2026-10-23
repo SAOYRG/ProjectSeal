@@ -9,9 +9,9 @@ from projectseal.exceptions import ProjectSealError, ToolError
 from projectseal.utils.files import read_json, regular_file
 from projectseal.utils.subprocess import run
 
-SUPPORTED_VERSION = "3.0.2"
+SUPPORTED_VERSION = "3.1.4"
 INSTALL_HELP = (
-    "Install Cosign 3.0.2 from https://github.com/sigstore/cosign/releases/tag/v3.0.2 "
+    "Install Cosign 3.1.4 from https://github.com/sigstore/cosign/releases/tag/v3.1.4 "
     "(Windows: cosign-windows-amd64.exe; macOS: cosign-darwin-amd64 or arm64; "
     "Linux: cosign-linux-amd64 or arm64), verify the download, rename to cosign "
     "(cosign.exe on Windows), and add its directory to PATH. "
@@ -32,16 +32,40 @@ class Cosign:
         for command, flags in (
             (
                 "sign-blob",
-                ("--bundle", "--yes", "--key", "--new-bundle-format", "--fulcio-auth-flow"),
+                ("--bundle", "--yes", "--key", "--fulcio-auth-flow"),
             ),
             (
                 "verify-blob",
-                ("--bundle", "--certificate-identity ", "--certificate-oidc-issuer ", "--key"),
+                ("--bundle", "--certificate-identity", "--certificate-oidc-issuer", "--key"),
             ),
         ):
             help_result = run([executable, command, "--help"], timeout=15)
-            if help_result.returncode or any(flag not in help_result.stdout for flag in flags):
+            if help_result.returncode or any(
+                re.search(rf"(?:^|\s){re.escape(flag)}(?=[\s=])", help_result.stdout) is None
+                for flag in flags
+            ):
                 raise ToolError("Cosign does not expose the required bundle/identity options.")
+
+    @staticmethod
+    def modern_bundle(path: Path) -> bool:
+        """Fail closed on legacy bundles, independently of the upstream security fix."""
+        try:
+            data = read_json(path, limit=16 * 1024 * 1024)
+        except ProjectSealError:
+            return False
+        return (
+            isinstance(data, dict)
+            and isinstance(data.get("mediaType"), str)
+            and data.get("mediaType")
+            in {
+                "application/vnd.dev.sigstore.bundle.v0.3+json",
+                "application/vnd.dev.sigstore.bundle+json;version=0.3",
+            }
+            and isinstance(data.get("messageSignature"), dict)
+            and bool(data["messageSignature"])
+            and isinstance(data.get("verificationMaterial"), dict)
+            and bool(data["verificationMaterial"])
+        )
 
     def sign(
         self,
@@ -68,21 +92,8 @@ class Cosign:
                 "SIGNING_FAILED",
             )
         # A zero exit without a modern bundle is never a successful signing result.
-        try:
-            data = read_json(bundle, limit=16 * 1024 * 1024)
-            if (
-                not isinstance(data, dict)
-                or not str(data.get("mediaType", "")).startswith(
-                    "application/vnd.dev.sigstore.bundle"
-                )
-                or not data.get("messageSignature")
-                or not data.get("verificationMaterial")
-            ):
-                raise ValueError("missing bundle evidence")
-        except (ProjectSealError, ValueError) as exc:
-            raise ToolError(
-                "Cosign did not create a modern Sigstore bundle; reinstall Cosign."
-            ) from exc
+        if not self.modern_bundle(bundle):
+            raise ToolError("Cosign did not create a modern Sigstore bundle; reinstall Cosign.")
 
     def verify(
         self,
@@ -94,6 +105,8 @@ class Cosign:
     ) -> bool:
         if (policy is None) == (key is None):
             raise ToolError("Verification requires exactly one explicit trust source.")
+        if not self.modern_bundle(bundle):
+            return False
         args = [self.executable, "verify-blob", "--bundle", str(regular_file(bundle))]
         if policy:
             args.extend(

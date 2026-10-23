@@ -1,17 +1,19 @@
 # Validation and release readiness
 
-Validation date: **2026-10-24 (Asia/Shanghai)**. No GitHub push, public release or
-PyPI publication has been performed. This is a release candidate until external
-release prerequisites below are completed.
+Validation date: **2026-10-24 (Asia/Shanghai)**. Repository:
+[SAOYRG/ProjectSeal](https://github.com/SAOYRG/ProjectSeal). This is a release
+candidate; remote CI/OIDC results are recorded after their runs complete. No
+public release or PyPI publication has been performed.
 
 ## Actual local results
 
-- Windows amd64, Python 3.13.12: **100 passed, 3 skipped**, **95%** combined
+- Windows amd64, Python 3.13.12: **106 passed, 3 skipped**, **95%** combined
   statement/branch coverage. The three skipped tests require external fixture/key/
   OIDC configuration. Hard-link protection also passed outside the restrictive sandbox.
 - Ruff lint/format and strict mypy: passed.
-- Real Cosign **3.0.2** official executable: GitHub asset SHA-256 matched
-  `7a137280d8686665ceb4d8565df2a0ac63f28031e014cdcae5d56891a6c8a400`.
+- Real Cosign **3.1.4** official executable: GitHub asset SHA-256 matched
+  `cbe953787074611f1334cbf37dc1cf953995bb8c45398eb4fc7bb781d29c1f2a`.
+- Ordinary suite plus the configured real public fixture: **107 passed, 2 skipped**.
 - Real public-release verification test: **1 passed**, including positive
   verification, modified bytes, incorrect exact signer identity and incorrect issuer.
   Fixture: official Cosign Windows executable and its public release bundle;
@@ -44,7 +46,7 @@ or signing key. Fixture bundles containing `stub` are explicitly not signatures.
 
 ## Opt-in public verification
 
-Put verified Cosign 3.0.2 on PATH and set these environment variables to an
+Put verified Cosign 3.1.4 on PATH and set these environment variables to an
 independently trusted artifact and its evidence (use platform-specific shell syntax):
 
 ```text

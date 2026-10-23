@@ -52,8 +52,8 @@ macOS/Linux 激活命令为 `. .venv/bin/activate`。也可安装本地构建产
 
 ### 安装 Cosign
 
-当前仅接受 **Cosign 3.0.2**，运行前检测版本及必要参数。从
-[官方发行页](https://github.com/sigstore/cosign/releases/tag/v3.0.2)
+当前仅接受 **Cosign 3.1.4**，运行前检测版本及必要参数。从
+[官方发行页](https://github.com/sigstore/cosign/releases/tag/v3.1.4)
 选择 Windows amd64、macOS amd64/arm64 或 Linux amd64/arm64 对应文件，按
 [官方安装指南](https://docs.sigstore.dev/cosign/system_config/installation/)
 验证下载来源后，以 `cosign`（Windows 为 `cosign.exe`）放入 PATH。

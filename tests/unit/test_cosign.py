@@ -12,7 +12,7 @@ from projectseal.utils.subprocess import ProcessResult, run
 @pytest.fixture
 def cosign_stub(monkeypatch):
     calls = []
-    state = {"exit": 0, "version": "3.0.2", "write_bundle": True, "help": True}
+    state = {"exit": 0, "version": "3.1.4", "write_bundle": True, "help": True}
 
     def fake_run(args, **kwargs):
         calls.append((args, kwargs))
@@ -45,11 +45,14 @@ def cosign_stub(monkeypatch):
 
 def test_missing_cosign(monkeypatch):
     monkeypatch.setattr("projectseal.signing.cosign.shutil.which", lambda _: None)
-    with pytest.raises(ToolError, match="Install Cosign 3.0.2"):
+    with pytest.raises(ToolError, match="Install Cosign 3.1.4"):
         Cosign()
 
 
-@pytest.mark.parametrize("version", ["2.6.0", "3.0.1", "3.0.3", "3.0.2-rc.1", "4.0.0", "garbage"])
+@pytest.mark.parametrize(
+    "version",
+    ["2.6.0", "3.0.1", "3.0.2", "3.0.3", "3.1.2", "3.1.3", "3.1.4-rc.1", "4.0.0", "garbage"],
+)
 def test_unvalidated_versions_rejected(cosign_stub, version):
     cosign_stub[0]["version"] = version
     with pytest.raises(ToolError, match="Unsupported"):
@@ -60,6 +63,25 @@ def test_required_flags_checked(cosign_stub):
     cosign_stub[0]["help"] = False
     with pytest.raises(ToolError, match="required"):
         Cosign()
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [
+        {"cert": "-----BEGIN PUBLIC KEY-----\nattacker-controlled\n", "base64Signature": "stub"},
+        {"mediaType": ["application/vnd.dev.sigstore.bundle.v0.3+json"]},
+        {"mediaType": "application/vnd.dev.sigstore.bundle.invalid"},
+    ],
+)
+def test_legacy_or_malformed_bundle_rejected_before_cosign(
+    cosign_stub, artifact, tmp_path, policy, payload
+):
+    bundle = tmp_path / "untrusted.json"
+    bundle.write_text(json.dumps(payload))
+    backend = Cosign()
+    calls_before = len(cosign_stub[1])
+    assert not backend.verify(artifact, bundle, policy=policy)
+    assert len(cosign_stub[1]) == calls_before
 
 
 def test_sign_arguments_and_bundle(cosign_stub, artifact, tmp_path):
@@ -93,7 +115,15 @@ def test_zero_exit_without_bundle_is_error(cosign_stub, artifact, tmp_path):
 
 def test_verification_exact_identity_no_bypasses(cosign_stub, artifact, tmp_path, policy):
     bundle = tmp_path / "bundle"
-    bundle.write_text("{}")
+    bundle.write_text(
+        json.dumps(
+            {
+                "mediaType": "application/vnd.dev.sigstore.bundle.v0.3+json",
+                "messageSignature": {"signature": "stub-only"},
+                "verificationMaterial": {"tlogEntries": ["stub-only"]},
+            }
+        )
+    )
     assert Cosign().verify(artifact, bundle, policy=policy)
     args, options = cosign_stub[1][-1]
     assert args[args.index("--certificate-identity") + 1] == policy.certificate_identity
