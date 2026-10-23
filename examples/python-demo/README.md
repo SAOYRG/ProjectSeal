@@ -11,4 +11,4 @@ projectseal verify dist/app.zip --manifest dist/app.zip.manifest.json --certific
 ```
 
 The last command needs your real, independently trusted identity/issuer. Signing
-requires verified Cosign 3.0.2 and OIDC login. The demo has no bundled keys/tokens.
+requires verified Cosign 3.1.4 and OIDC login. The demo has no bundled keys/tokens.

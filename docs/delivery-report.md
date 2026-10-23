@@ -54,7 +54,8 @@ or install your own verified supported Cosign. See [the signing guide](signing-g
   dependency wheels. Its module location was site-packages, independent of src/.
   Help, version, initialization, status, identity and known SHA-256 JSON passed;
   the installed CLI also verified the genuine official Cosign public signature.
-- Workflow YAML parsed locally; this is not a substitute for remote CI execution.
+- GitHub's nine OS/Python combinations and the real OIDC artifact/manifest signing
+  workflow passed. Exact run links and signer constraints are in validation.md.
 
 Build outputs: `dist/projectseal-0.1.0-py3-none-any.whl` and
 `dist/projectseal-0.1.0.tar.gz`. `dist/SHA256SUMS` contains integrity checksums,
@@ -63,16 +64,15 @@ venvs or test caches are included in the distributions.
 
 ## Remaining external acceptance
 
-Fresh keyless/OIDC signing was not run with a user's account locally. The manual,
-default-branch-only `cosign-live.yml` workflow is supplied to exercise artifact
-and manifest signing through GitHub Actions OIDC. It must be run after repository
-setup and environment review. Public-bundle verification and key signing do not
-replace this test.
+Fresh keyless artifact/manifest signing through GitHub Actions OIDC has passed.
+The nine OS/Python CI combinations have passed. A user's local interactive
+browser login was not exercised. The public repository, private vulnerability
+reporting, main-only signing environment and maintainer-controlled v* tags are
+configured. See [validation](validation.md) for evidence.
 
-The nine OS/Python CI combinations have been defined but have not run remotely.
-Configure repository identity, a private security/contact channel, protected
-tags/environments, package ownership and PyPI Trusted Publishing before release.
-See [validation](validation.md). No GitHub push or PyPI publish was performed.
+Before a public package release, confirm package ownership and configure PyPI
+Trusted Publishing plus the protected publishing environment. Source has been
+pushed to SAOYRG/ProjectSeal; no GitHub Release or PyPI package was published.
 
 ## Suggested v0.2.0 scope
 

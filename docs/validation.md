@@ -2,8 +2,28 @@
 
 Validation date: **2026-10-24 (Asia/Shanghai)**. Repository:
 [SAOYRG/ProjectSeal](https://github.com/SAOYRG/ProjectSeal). This is a release
-candidate; remote CI/OIDC results are recorded after their runs complete. No
-public release or PyPI publication has been performed.
+candidate with completed GitHub CI and keyless signing checks below. No public
+release or PyPI publication has been performed.
+
+## Actual GitHub results
+
+- [Nine-platform CI passed](https://github.com/SAOYRG/ProjectSeal/actions/runs/40008733386):
+  Ubuntu, Windows and macOS, each with Python 3.11, 3.12 and 3.13. Every job ran
+  Ruff, formatting, mypy, pytest/coverage, wheel/sdist build, metadata checks and
+  installed-wheel smoke checks.
+- [Real GitHub Actions OIDC signing passed](https://github.com/SAOYRG/ProjectSeal/actions/runs/40009278448)
+  with Cosign 3.1.4. Synthetic artifact and canonical manifest signatures verified;
+  wrong identity and tampered content were rejected. Expected identity:
+  `https://github.com/SAOYRG/ProjectSeal/.github/workflows/cosign-live.yml@refs/heads/main`;
+  issuer: `https://token.actions.githubusercontent.com`.
+- The `signing-integration` environment permits only `main`. Active ruleset
+  `Maintainer-controlled release tags` restricts `v*` tag creation/update/deletion
+  to SAOYRG. Private vulnerability reporting is enabled.
+- An initial live run failed during installation because the old installer used
+  removed detached-signature assets. Updating the official pinned installer to
+  v4.1.2 fixed that issue; the successful run above covers the corrected workflow.
+- Upstream advisory review replaced the pre-release Cosign 3.0.2 pin with patched
+  3.1.4 before source upload. Legacy and malformed bundles are explicitly rejected.
 
 ## Actual local results
 
@@ -85,18 +105,18 @@ pytest tests/integration/test_real_cosign.py::test_live_keyless_sign_and_verify 
 The repository includes `cosign-live.yml`, manually dispatched on the reviewed
 default branch only. Configure a protected `signing-integration` environment first.
 It uses GitHub Actions OIDC and exact workflow identity, and exercises fresh
-keyless artifact/manifest signing plus identity and tamper failures. It has not
-been executed on GitHub here. For interactive local login use `projectseal sign`
+keyless artifact/manifest signing plus identity and tamper failures. Its successful
+GitHub run is linked above. For interactive local login use `projectseal sign`
 and independently verify using your actual identity/issuer.
 
 ## External release prerequisites
 
-1. Run the nine Python/platform CI combinations on GitHub; no remote CI result is
-   available from this workspace. Run the opt-in keyless workflow or local login test.
+1. Recheck CI on the exact release commit. The nine-platform and real keyless
+   checks above passed; a user's interactive local browser login was not tested.
 2. Review current upstream advisories and the narrow Cosign pin, dependencies and
    pinned GitHub Actions. Upgrade and retest when necessary.
-3. Configure a real repository/homepage, private vulnerability reporting and a
-   maintainer conduct/security contact. No nonexistent addresses are advertised.
+3. Keep the configured repository/homepage and private vulnerability reporting
+   operational. No nonexistent contact addresses are advertised.
 4. Reserve/confirm the PyPI name and configure Trusted Publishing for this exact
    repository, release workflow and `pypi` environment. Set environment reviewers,
    prevent self-review and restrict deployments to protected `v*` tags.

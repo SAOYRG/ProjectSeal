@@ -125,8 +125,9 @@ python -m twine check dist/*.whl dist/*.tar.gz
 
 Ordinary tests mock external signing services. Live tests require explicit opt-in;
 their environment is documented in [validation](docs/validation.md).
-CI defines Python 3.11/3.12/3.13 on Ubuntu, Windows and macOS. Defining the matrix
-does not establish that it has run on GitHub.
+The Python 3.11/3.12/3.13 matrix on Ubuntu, Windows and macOS has passed on GitHub,
+as has the real GitHub Actions OIDC signing test. See the linked validation record
+for exact commits, workflow runs and remaining release prerequisites.
 
 ## Roadmap
 

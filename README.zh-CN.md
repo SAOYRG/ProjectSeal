@@ -113,8 +113,9 @@ python -m twine check dist/*.whl dist/*.tar.gz
 ```
 
 普通测试使用 Stub/Mock，不能代替真实认证。可选真实测试要求与当前结果见
-[验证记录](docs/validation.md)。CI 已定义 Python 3.11、3.12、3.13 × Ubuntu、
-Windows、macOS 矩阵；文件存在不代表 GitHub 已运行通过。
+[验证记录](docs/validation.md)。Python 3.11、3.12、3.13 × Ubuntu、Windows、
+macOS 的九组 GitHub CI 已通过，真实 GitHub Actions OIDC 无密钥签名验收也已通过；
+具体提交、运行记录和发版前待办均已记录。
 
 ## 路线图、贡献与许可证
 
