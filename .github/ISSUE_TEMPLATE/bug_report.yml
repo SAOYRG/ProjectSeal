@@ -1,0 +1,22 @@
+name: Bug report
+description: Report a reproducible issue without secrets or sensitive security details.
+body:
+  - type: markdown
+    attributes:
+      value: 'For vulnerabilities, follow SECURITY.md. Never include private keys or tokens.'
+  - type: input
+    id: version
+    attributes:
+      label: ProjectSeal / Cosign / Python versions and OS
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce and expected / actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Redacted command and JSON output

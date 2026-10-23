@@ -1,0 +1,73 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "projectseal"
+version = "0.1.0"
+description = "Verifiable software release identities with Sigstore Cosign"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{name = "ProjectSeal contributors"}]
+keywords = ["sigstore", "cosign", "signing", "supply-chain", "cli"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Security :: Cryptography",
+]
+dependencies = ["typer>=0.16,<1", "rich>=13.9,<15", "pydantic>=2.10,<3"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3,<10", "pytest-cov>=6,<8", "ruff>=0.11,<1", "mypy>=1.15,<2", "build>=1.2,<2", "twine>=6,<7"]
+
+[project.scripts]
+projectseal = "projectseal.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/SAOYRG/ProjectSeal"
+Repository = "https://github.com/SAOYRG/ProjectSeal"
+Issues = "https://github.com/SAOYRG/ProjectSeal/issues"
+Security = "https://github.com/SAOYRG/ProjectSeal/security/policy"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/projectseal"]
+core-metadata-version = "2.4"
+
+[tool.hatch.build.targets.sdist]
+core-metadata-version = "2.4"
+include = ["/src", "/tests", "/docs", "/examples", "/*.md", "/LICENSE", "/pyproject.toml", "/.github", "/.gitignore", "/.gitattributes"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = ["cosign: opt-in tests with a real Cosign binary", "keyless: opt-in live OIDC authentication (may open browser)"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "S"]
+ignore = ["S603", "S607"]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["typer.Argument", "typer.Option"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S105", "S106"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+files = ["src"]
+
+[tool.coverage.run]
+source = ["projectseal"]
+branch = true
