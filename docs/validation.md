@@ -19,6 +19,10 @@ release or PyPI publication has been performed.
 - The `signing-integration` environment permits only `main`. Active ruleset
   `Maintainer-controlled release tags` restricts `v*` tag creation/update/deletion
   to SAOYRG. Private vulnerability reporting is enabled.
+- The `pypi` environment permits only `v*` tags, requires SAOYRG's review and
+  prohibits self-review. With the current single maintainer, a second authorized
+  maintainer must participate in triggering/reviewing an actual publication.
+  PyPI ownership and Trusted Publishing have not been configured or exercised.
 - An initial live run failed during installation because the old installer used
   removed detached-signature assets. Updating the official pinned installer to
   v4.1.2 fixed that issue; the successful run above covers the corrected workflow.
@@ -118,8 +122,9 @@ and independently verify using your actual identity/issuer.
 3. Keep the configured repository/homepage and private vulnerability reporting
    operational. No nonexistent contact addresses are advertised.
 4. Reserve/confirm the PyPI name and configure Trusted Publishing for this exact
-   repository, release workflow and `pypi` environment. Set environment reviewers,
-   prevent self-review and restrict deployments to protected `v*` tags.
+   repository, release workflow and `pypi` environment. The environment already
+   has tag restrictions, required review and self-review prevention; add a second
+   authorized maintainer before attempting a publication.
 5. Review tag/source/version and build contents before approval. Tag pushes only
    test/build; publication requires manual dispatch with publish=true on the tag,
    followed by protected-environment approval. PR workflows never publish.

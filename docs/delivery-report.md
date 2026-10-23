@@ -70,9 +70,11 @@ browser login was not exercised. The public repository, private vulnerability
 reporting, main-only signing environment and maintainer-controlled v* tags are
 configured. See [validation](validation.md) for evidence.
 
-Before a public package release, confirm package ownership and configure PyPI
-Trusted Publishing plus the protected publishing environment. Source has been
-pushed to SAOYRG/ProjectSeal; no GitHub Release or PyPI package was published.
+The GitHub `pypi` environment is restricted to `v*` tags, requires SAOYRG's review
+and prohibits self-review. Before a public package release, add a second authorized
+maintainer, confirm PyPI package ownership and configure Trusted Publishing.
+Source has been pushed to SAOYRG/ProjectSeal; no GitHub Release or PyPI package
+was published.
 
 ## Suggested v0.2.0 scope
 
