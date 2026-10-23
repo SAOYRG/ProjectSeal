@@ -22,7 +22,7 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Topic :: Security :: Cryptography",
 ]
-dependencies = ["typer>=0.16,<1", "rich>=13.9,<15", "pydantic>=2.10,<3"]
+dependencies = ["typer>=0.16,<1", "rich>=13.9,<16", "pydantic>=2.10,<3"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8.3,<10", "pytest-cov>=6,<8", "ruff>=0.11,<1", "mypy>=1.15,<2", "build>=1.2,<2", "twine>=6,<7"]
