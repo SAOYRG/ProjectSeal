@@ -1,12 +1,12 @@
 # ProjectSeal CLI 0.1.0 delivery report
 
-Delivered in `F:\pjj` on 2026-10-24 (Asia/Shanghai). This is a working release
-candidate with remaining external acceptance steps, not a claim of a completed
-public release. See [the complete file inventory](file-inventory.md).
+Delivered in `F:\pjj` on 2026-10-24 (Asia/Shanghai). GitHub Release publication
+is handled by the checked and signed tag workflow. PyPI account binding remains
+an external step. See [publishing](publishing.md) and [the file inventory](file-inventory.md).
 
 ## Implemented
 
-All six commands: init, status, identity, hash, sign and verify. Versioned UUID
+All seven commands: init, status, identity, hash, keygen, sign and verify. Versioned UUID
 configuration, strict JSON, UTC timestamps, optional Git context, streaming
 SHA-256, native Sigstore bundles, trusted identity/issuer or public-key verification,
 explicit policy files, separately signed canonical manifests, JSON and CI modes,
@@ -40,7 +40,7 @@ or install your own verified supported Cosign. See [the signing guide](signing-g
 
 ## Verification results
 
-- Normal suite: **106 passed, 3 skipped**, **95%** statement/branch coverage on
+- Normal suite: **117 passed, 3 skipped**, **96%** statement/branch coverage on
   Windows amd64/Python 3.13.12. Skips are opt-in real-fixture, keyless and key tests.
 - Ruff lint/format and strict mypy passed.
 - Separate real Cosign public-bundle suite: **1 passed**, covering valid signature,
@@ -48,6 +48,8 @@ or install your own verified supported Cosign. See [the signing guide](signing-g
 - Separate real Cosign key-based signing suite: **1 passed**, covering actual
   artifact and manifest signing, trusted-key verification and tampering. Disposable
   keys were removed after testing. Only synthetic text was signed.
+- New local key generation was exercised with real Cosign and a random test
+  password before the same signing/verification checks; generated keys were removed.
 - Wheel and sdist built successfully; both passed Twine metadata checks with
   core metadata 2.4, avoiding the current Twine 6 / metadata 2.5 incompatibility.
 - The wheel was installed with pip into a fresh, separate environment from local
@@ -73,8 +75,9 @@ configured. See [validation](validation.md) for evidence.
 The GitHub `pypi` environment is restricted to `v*` tags, requires SAOYRG's review
 and prohibits self-review. Before a public package release, add a second authorized
 maintainer, confirm PyPI package ownership and configure Trusted Publishing.
-Source has been pushed to SAOYRG/ProjectSeal; no GitHub Release or PyPI package
-was published.
+Source and the signed GitHub Release workflow are in SAOYRG/ProjectSeal. Actual
+release artifacts are recorded on its Releases page. PyPI publication remains
+pending account binding and an eligible environment reviewer.
 
 ## Suggested v0.2.0 scope
 

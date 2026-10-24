@@ -46,6 +46,18 @@ class Cosign:
             ):
                 raise ToolError("Cosign does not expose the required bundle/identity options.")
 
+    def generate_key_pair(self, prefix: Path, *, non_interactive: bool = False) -> None:
+        result = run(
+            [self.executable, "generate-key-pair", "--output-key-prefix", str(prefix.resolve())],
+            timeout=180,
+            interactive=not non_interactive,
+        )
+        if result.returncode:
+            raise ProjectSealError(
+                "Cosign key generation failed; check the password and local file permissions.",
+                "KEY_GENERATION_FAILED",
+            )
+
     @staticmethod
     def modern_bundle(path: Path) -> bool:
         """Fail closed on legacy bundles, independently of the upstream security fix."""

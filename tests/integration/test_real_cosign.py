@@ -1,12 +1,14 @@
 """Opt-in live tests. They never authenticate unless PROJECTSEAL_KEYLESS_TEST=1."""
 
 import os
+import secrets
 from pathlib import Path
 
 import pytest
 
 from projectseal.config import TrustPolicy
 from projectseal.core.identity import initialize
+from projectseal.core.keys import generate_key_pair
 from projectseal.core.release import default_manifest, sign_release
 from projectseal.core.verification import VerificationStatus, verify_release
 
@@ -74,9 +76,13 @@ def test_live_keyless_sign_and_verify(tmp_path):
 
 
 @pytest.mark.cosign
-def test_live_key_sign_and_verify(tmp_path):
+def test_live_key_sign_and_verify(tmp_path, monkeypatch):
     private = os.environ.get("PROJECTSEAL_TEST_PRIVATE_KEY")
     public = os.environ.get("PROJECTSEAL_TEST_PUBLIC_KEY")
+    if os.environ.get("PROJECTSEAL_KEYGEN_TEST") == "1":
+        monkeypatch.setenv("COSIGN_PASSWORD", secrets.token_urlsafe(32))
+        generated = generate_key_pair(tmp_path / "disposable", non_interactive=True)
+        private, public = generated["private_key"], generated["public_key"]
     if not private or not public:
         pytest.skip("Set PROJECTSEAL_TEST_PRIVATE_KEY/PUBLIC_KEY to disposable Cosign key files")
     file = tmp_path / "release.txt"

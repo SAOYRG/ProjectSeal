@@ -9,13 +9,14 @@
 
 ProjectSeal 是本地优先的 Python 命令行工具，提供项目 UUID、SHA-256 指纹、
 Sigstore Cosign 签名及带信任约束的验证。无需 ProjectSeal 账号、数据库或云服务。
-**0.1.0 当前作为首版候选交付**，正式发布前请检查[实际验证状态](docs/validation.md)。
+**0.1.0 为首个版本**，参阅[实际验证状态](docs/validation.md)和[发布说明](docs/publishing.md)。
 
 ## 主要功能
 
 - 初始化带 schema_version 的项目身份文件，显示名称明确属于用户声明。
 - 以 1 MiB 分块读取任意普通二进制文件，支持大文件。
 - 默认使用 Cosign 无密钥签名，输出现代 Sigstore Bundle。
+- 支持 `keygen --output-prefix` 生成加密的自定义本机密钥，以及 `sign --key` / `verify --key`。
 - 验证必须指定精确签名者身份和 OIDC issuer、明确可信的策略文件，或受信任公钥。
 - 可选生成规范化 Manifest，并对 Manifest **单独签名**。
 - 展示 Git 分支、Commit 和未提交修改；非 Git 项目也可正常使用。

@@ -11,6 +11,7 @@ exit 2; they are not runtime JSON results.
 | `identity` | none | Self-declared metadata; `authenticated: false`. |
 | `status` | none | Config, Git and untrusted nearby release references. |
 | `hash FILE` | none | `{file, algorithm, digest, size}`. |
+| `keygen` | required `--output-prefix`, `--non-interactive` | Generate encrypted local `.key` and `.pub`; never overwrite; JSON requires nonempty COSIGN_PASSWORD. |
 | `sign FILE` | `--output/-o`, `--release-version`, `--key`, `--non-interactive`, `--force` | Default bundle `FILE.sigstore.json`; optional signed manifest. |
 | `verify FILE` | `--bundle`, identity flags, `--policy`, `--key`, `--manifest`, `--manifest-bundle` | Require exactly one trust source. |
 

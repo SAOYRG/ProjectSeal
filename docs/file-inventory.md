@@ -1,6 +1,6 @@
 # Delivered source file inventory
 
-62 source, documentation and workflow files, excluding local tools, environments, caches and dist/.
+66 source, documentation and workflow files, excluding local tools, environments, caches and dist/.
 
 - `.gitattributes`
 - `.github/ISSUE_TEMPLATE/bug_report.yml`
@@ -22,6 +22,7 @@
 - `docs/delivery-report.md`
 - `docs/file-inventory.md`
 - `docs/getting-started.md`
+- `docs/publishing.md`
 - `docs/security-model.md`
 - `docs/signing-guide.md`
 - `docs/validation.md`
@@ -35,6 +36,7 @@
 - `src/projectseal/commands/hash.py`
 - `src/projectseal/commands/identity.py`
 - `src/projectseal/commands/init.py`
+- `src/projectseal/commands/keygen.py`
 - `src/projectseal/commands/sign.py`
 - `src/projectseal/commands/status.py`
 - `src/projectseal/commands/verify.py`
@@ -43,6 +45,7 @@
 - `src/projectseal/core/git.py`
 - `src/projectseal/core/hashing.py`
 - `src/projectseal/core/identity.py`
+- `src/projectseal/core/keys.py`
 - `src/projectseal/core/manifest.py`
 - `src/projectseal/core/release.py`
 - `src/projectseal/core/status.py`
@@ -63,4 +66,5 @@
 - `tests/unit/test_core.py`
 - `tests/unit/test_cosign.py`
 - `tests/unit/test_file_failures.py`
+- `tests/unit/test_keys.py`
 - `tests/unit/test_release.py`

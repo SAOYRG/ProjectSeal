@@ -1,9 +1,11 @@
 # Validation and release readiness
 
 Validation date: **2026-10-24 (Asia/Shanghai)**. Repository:
-[SAOYRG/ProjectSeal](https://github.com/SAOYRG/ProjectSeal). This is a release
-candidate with completed GitHub CI and keyless signing checks below. No public
-release or PyPI publication has been performed.
+[SAOYRG/ProjectSeal](https://github.com/SAOYRG/ProjectSeal). GitHub CI and keyless
+signing checks are recorded below. The signed release workflow publishes to
+[GitHub Releases](https://github.com/SAOYRG/ProjectSeal/releases); PyPI ownership
+and Trusted Publishing binding still require the account setup in
+[publishing](publishing.md).
 
 ## Actual GitHub results
 
@@ -31,7 +33,7 @@ release or PyPI publication has been performed.
 
 ## Actual local results
 
-- Windows amd64, Python 3.13.12: **106 passed, 3 skipped**, **95%** combined
+- Windows amd64, Python 3.13.12: **117 passed, 3 skipped**, **96%** combined
   statement/branch coverage. The three skipped tests require external fixture/key/
   OIDC configuration. Hard-link protection also passed outside the restrictive sandbox.
 - Ruff lint/format and strict mypy: passed.
@@ -47,6 +49,11 @@ release or PyPI publication has been performed.
   signed synthetic text plus its canonical manifest using default public services.
   Both signatures verified; modified content failed artifact verification and
   produced FILE_MODIFIED against the authenticated manifest. Disposable keys deleted.
+- New `keygen` generated disposable encrypted keys through ProjectSeal, then the
+  real key-based artifact/manifest and tamper checks passed again. Ordinary tests
+  cover output collisions, failed generation cleanup, partial publication rollback,
+  password requirements and private-output redaction. Persistent user keys were
+  not generated or uploaded by the release process.
 - Fresh OIDC/keyless signing with the user's own account: **not run locally**.
   Successful verification of an existing public keyless signature does not prove
   the interactive login/signing flow was exercised.
@@ -94,6 +101,8 @@ For a key-based live test, supply paths to disposable private/public Cosign keys
 via PROJECTSEAL_TEST_PRIVATE_KEY and PROJECTSEAL_TEST_PUBLIC_KEY. Supply the key
 password via Cosign's supported credential mechanism. This creates public log
 records for synthetic content. Never use production keys for test fixtures.
+Alternatively set `PROJECTSEAL_KEYGEN_TEST=1` to generate disposable keys with a
+random password through ProjectSeal itself; remove the temporary keys afterward.
 
 ```sh
 pytest tests/integration/test_real_cosign.py::test_live_key_sign_and_verify -v
@@ -125,9 +134,10 @@ and independently verify using your actual identity/issuer.
    repository, release workflow and `pypi` environment. The environment already
    has tag restrictions, required review and self-review prevention; add a second
    authorized maintainer before attempting a publication.
-5. Review tag/source/version and build contents before approval. Tag pushes only
-   test/build; publication requires manual dispatch with publish=true on the tag,
-   followed by protected-environment approval. PR workflows never publish.
+5. Review tag/source/version and build contents before tagging. Tag pushes run
+   checks, build, sign, verify and publish a GitHub Release. PyPI publication
+   requires manual dispatch with publish=true on the tag, followed by protected
+   environment approval. PR workflows never publish.
 
 Publishing jobs only download built distributions and invoke the pinned PyPA
 publisher with attestations; they never checkout, install or execute project

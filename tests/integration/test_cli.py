@@ -11,7 +11,7 @@ runner = CliRunner()
 
 
 @pytest.mark.parametrize(
-    "command", [[], ["init"], ["status"], ["identity"], ["hash"], ["sign"], ["verify"]]
+    "command", [[], ["init"], ["status"], ["identity"], ["hash"], ["keygen"], ["sign"], ["verify"]]
 )
 def test_help(command):
     result = runner.invoke(app, [*command, "--help"])

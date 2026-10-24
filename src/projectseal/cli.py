@@ -1,7 +1,7 @@
 import typer
 
 from projectseal import __version__
-from projectseal.commands import hash, identity, init, sign, status, verify
+from projectseal.commands import hash, identity, init, keygen, sign, status, verify
 
 app = typer.Typer(
     name="projectseal",
@@ -30,5 +30,6 @@ app.command("init")(init.command)
 app.command("identity")(identity.command)
 app.command("status")(status.command)
 app.command("hash")(hash.command)
+app.command("keygen")(keygen.command)
 app.command("sign")(sign.command)
 app.command("verify")(verify.command)

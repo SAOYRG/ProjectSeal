@@ -10,13 +10,14 @@
 ProjectSeal is a local-first Python CLI for project identity records, SHA-256
 fingerprints, Sigstore Cosign signing and identity-constrained verification.
 No ProjectSeal account, database or server is required. Version **0.1.0** is an
-initial release candidate; see [validation status](docs/validation.md) before release.
+initial release; see [validation status](docs/validation.md) and [publishing](docs/publishing.md).
 
 ## Features
 
 - Initialize a versioned project UUID and self-declared metadata.
 - Hash binary files in bounded 1 MiB chunks.
 - Sign artifacts with modern Sigstore bundles; keyless signing is the default.
+- Generate encrypted custom local keys with `keygen --output-prefix`.
 - Require an exact signer identity and issuer, an explicitly supplied trust policy,
   or an independently trusted local public key when verifying.
 - Optionally create **and separately sign** a canonical release manifest.
@@ -49,8 +50,10 @@ projectseal --help
 projectseal --version
 ```
 
-You can also install a locally built wheel with `python -m pip install
-dist/projectseal-0.1.0-py3-none-any.whl`. A public PyPI release is not assumed.
+Download the wheel and signature from [GitHub Releases](https://github.com/SAOYRG/ProjectSeal/releases).
+Verify it using [the signing guide](docs/signing-guide.md), then install with
+`python -m pip install projectseal-0.1.0-py3-none-any.whl`.
+PyPI publication is tracked separately in [publishing](docs/publishing.md).
 
 ### Cosign
 
