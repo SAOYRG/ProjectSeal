@@ -40,9 +40,10 @@ Pending publisher registration does not itself publish or reserve a project name
 
 The GitHub half is configured: `id-token: write`, PyPA's publisher with
 attestations, and environment `pypi` limited to `v*` tags. SAOYRG review is
-required and self-review is prohibited. A second authorized maintainer must
-participate in triggering/reviewing publication. Do not remove this gate to
-work around an approval failure.
+required. On 2026-10-24 the owner explicitly authorized SAOYRG to review releases
+that SAOYRG triggered, so `prevent_self_review` is false. Human approval is still
+required for every publication; the reviewer and tag restrictions remain active.
+This permits a single-maintainer release without an independent second reviewer.
 
 After the PyPI binding and reviewers are ready, dispatch `release.yml` on
 `v0.1.0` with `publish=true` and `github_release=false`. Approve the protected

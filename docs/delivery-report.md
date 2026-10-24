@@ -72,9 +72,9 @@ browser login was not exercised. The public repository, private vulnerability
 reporting, main-only signing environment and maintainer-controlled v* tags are
 configured. See [validation](validation.md) for evidence.
 
-The GitHub `pypi` environment is restricted to `v*` tags, requires SAOYRG's review
-and prohibits self-review. Before a public package release, add a second authorized
-maintainer, confirm PyPI package ownership and configure Trusted Publishing.
+The GitHub `pypi` environment is restricted to `v*` tags and requires SAOYRG's review.
+The owner explicitly allowed self-review on 2026-10-24; human approval and tag
+restrictions remain active. PyPI account binding and upload validation are separate steps.
 Source and the signed GitHub Release workflow are in SAOYRG/ProjectSeal. Actual
 release artifacts are recorded on its Releases page. PyPI publication remains
 pending account binding and an eligible environment reviewer.

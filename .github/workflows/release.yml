@@ -134,7 +134,8 @@ jobs:
     if: github.event_name == 'workflow_dispatch' && inputs.publish && startsWith(github.ref, 'refs/tags/v')
     needs: build
     runs-on: ubuntu-latest
-    # REQUIRED external setup: reviewers, prevent self-review, tag-only deployment rules.
+    # External setup: required SAOYRG review and tag-only deployment rules.
+    # The owner explicitly permits self-review for this single-maintainer project.
     environment:
       name: pypi
       url: https://pypi.org/p/projectseal
