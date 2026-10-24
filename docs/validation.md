@@ -3,9 +3,9 @@
 Validation date: **2026-10-24 (Asia/Shanghai)**. Repository:
 [SAOYRG/ProjectSeal](https://github.com/SAOYRG/ProjectSeal). GitHub CI and keyless
 signing checks are recorded below. The signed release workflow publishes to
-[GitHub Releases](https://github.com/SAOYRG/ProjectSeal/releases); PyPI ownership
-and Trusted Publishing binding still require the account setup in
-[publishing](publishing.md).
+[GitHub Releases](https://github.com/SAOYRG/ProjectSeal/releases). The first
+[PyPI publication](https://pypi.org/project/projectseal/0.1.0/) and Trusted
+Publishing binding are complete; see [the publication record](publishing.md).
 
 ## Actual GitHub results
 
@@ -24,7 +24,10 @@ and Trusted Publishing binding still require the account setup in
 - The `pypi` environment permits only `v*` tags and requires SAOYRG's review.
   The owner explicitly authorized self-review on 2026-10-24; that setting is now
   allowed while the required reviewer and tag restrictions remain active.
-  PyPI ownership and Trusted Publishing have not been configured or exercised.
+  [PyPI publication succeeded](https://github.com/SAOYRG/ProjectSeal/actions/runs/40059992756)
+  after explicit human approval. PyPI reports version 0.1.0 and both file hashes
+  match the signed GitHub Release. Both public attestations passed independent
+  cryptographic verification with pypi-attestations 0.0.30 and the expected repository.
 - An initial live run failed during installation because the old installer used
   removed detached-signature assets. Updating the official pinned installer to
   v4.1.2 fixed that issue; the successful run above covers the corrected workflow.
@@ -130,7 +133,7 @@ and independently verify using your actual identity/issuer.
    pinned GitHub Actions. Upgrade and retest when necessary.
 3. Keep the configured repository/homepage and private vulnerability reporting
    operational. No nonexistent contact addresses are advertised.
-4. Reserve/confirm the PyPI name and configure Trusted Publishing for this exact
+4. Retain the completed PyPI Trusted Publishing binding for this exact
    repository, release workflow and `pypi` environment. The environment already
    has tag restrictions and required review. The owner's explicit single-maintainer
    self-review exception is recorded above; human publication approval is still required.

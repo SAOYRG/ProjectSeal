@@ -37,7 +37,15 @@ ProjectSeal 不上传源码、不收集遥测。详见[安全模型](docs/securi
 
 ## 安装
 
-需要 Python **3.11+**。在项目目录执行：
+需要 Python **3.11+**。可直接安装已发布的
+[PyPI 版本](https://pypi.org/project/projectseal/0.1.0/)：
+
+```powershell
+python -m pip install projectseal==0.1.0
+projectseal --version
+```
+
+从源码安装时，在项目目录执行：
 
 ```powershell
 python -m venv .venv
@@ -49,7 +57,7 @@ projectseal --version
 
 macOS/Linux 激活命令为 `. .venv/bin/activate`。也可安装本地构建产物：
 `python -m pip install dist/projectseal-0.1.0-py3-none-any.whl`。
-当前不假设已经在 PyPI 发布。
+PyPI Trusted Publishing 已完成实际发布及来源证明验证，见[发布记录](docs/publishing.md)。
 
 ### 安装 Cosign
 

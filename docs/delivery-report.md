@@ -1,8 +1,8 @@
 # ProjectSeal CLI 0.1.0 delivery report
 
 Delivered in `F:\pjj` on 2026-10-24 (Asia/Shanghai). GitHub Release publication
-is handled by the checked and signed tag workflow. PyPI account binding remains
-an external step. See [publishing](publishing.md) and [the file inventory](file-inventory.md).
+is handled by the checked and signed tag workflow. PyPI account binding and the
+first publication are complete. See [publishing](publishing.md) and [the file inventory](file-inventory.md).
 
 ## Implemented
 
@@ -58,6 +58,11 @@ or install your own verified supported Cosign. See [the signing guide](signing-g
   the installed CLI also verified the genuine official Cosign public signature.
 - GitHub's nine OS/Python combinations and the real OIDC artifact/manifest signing
   workflow passed. Exact run links and signer constraints are in validation.md.
+- PyPI Trusted Publishing passed after explicit human approval. The version and
+  both artifact hashes match the signed GitHub Release; both public attestations
+  passed pypi-attestations 0.0.30 verification against the expected repository.
+- Installation from the official PyPI index passed version, keygen help and
+  dependency checks in a separate environment.
 
 Build outputs: `dist/projectseal-0.1.0-py3-none-any.whl` and
 `dist/projectseal-0.1.0.tar.gz`. `dist/SHA256SUMS` contains integrity checksums,
@@ -74,10 +79,11 @@ configured. See [validation](validation.md) for evidence.
 
 The GitHub `pypi` environment is restricted to `v*` tags and requires SAOYRG's review.
 The owner explicitly allowed self-review on 2026-10-24; human approval and tag
-restrictions remain active. PyPI account binding and upload validation are separate steps.
+restrictions remain active. PyPI account binding and upload validation are complete.
 Source and the signed GitHub Release workflow are in SAOYRG/ProjectSeal. Actual
-release artifacts are recorded on its Releases page. PyPI publication remains
-pending account binding and an eligible environment reviewer.
+release artifacts are recorded on its Releases page and PyPI version 0.1.0 page.
+Both public distribution attestations were independently verified; see the
+publication record for hashes and the successful workflow run.
 
 ## Suggested v0.2.0 scope
 

@@ -38,7 +38,15 @@ code or collect telemetry. See [privacy and trust](docs/security-model.md).
 
 ## Installation
 
-Python **3.11+** is required. From this repository:
+Python **3.11+** is required. Install the published package from
+[PyPI](https://pypi.org/project/projectseal/0.1.0/):
+
+```sh
+python -m pip install projectseal==0.1.0
+projectseal --version
+```
+
+To install from this repository:
 
 ```sh
 python -m venv .venv
